@@ -7,6 +7,18 @@ const urlsToCache = [
   // Add image paths here
   'images/yamazaki.jpg',
   'images/hakushu.jpg'
+  'yamazaki.jpg'
+'hakushu.jpg'
+'hibiki.jpg'
+'yoichi.jpg'
+'fuji.jpg'
+'ichiro.jpg'
+'chita.jpg'
+'taketsuru.jpg'
+'akkeshi.jpg'
+'miyagikyo.jpg'
+'amahagan.jpg'
+'kanosuke.jpg'
 ];
 
 self.addEventListener('install', event => {
