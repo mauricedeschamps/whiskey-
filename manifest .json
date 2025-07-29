@@ -1,0 +1,29 @@
+// manifest.json
+{
+  "name": "Japanese Whisky Selection",
+  "short_name": "JPN Whisky",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a2a1d",
+  "theme_color": "#1a2a1d",
+  "description": "Discover the finest Japanese whiskies with cultural stories",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "icon-maskable.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    }
+  ]
+}

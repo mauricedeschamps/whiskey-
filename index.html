@@ -1,0 +1,457 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#1a2a1d">
+  <title>Japanese Whisky Selection</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --dark-bg: #1a2a1d;
+      --dark-text: #e8f5e9;
+      --dark-card: #2c3e2f;
+      --light-bg: #f5f9ee;
+      --light-text: #1a2a1d;
+      --light-card: #e4ede0;
+      --accent: #8ba87d;
+      --gold: #d4af37;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background-color: var(--dark-bg);
+      color: var(--dark-text);
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a2a1d"/><path d="M20,20 Q40,5 60,20 T100,20 M20,50 Q40,35 60,50 T100,50 M20,80 Q40,65 60,80 T100,80" stroke="%232c3e2f" stroke-width="1" fill="none"/></svg>');
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
+
+    body[data-theme="light"] {
+      background-color: var(--light-bg);
+      color: var(--light-text);
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23f5f9ee"/><path d="M20,20 Q40,5 60,20 T100,20 M20,50 Q40,35 60,50 T100,50 M20,80 Q40,65 60,80 T100,80" stroke="%23e4ede0" stroke-width="1" fill="none"/></svg>');
+    }
+
+    header {
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(26, 42, 29, 0.9);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    body[data-theme="light"] header {
+      background: rgba(229, 245, 233, 0.9);
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--gold);
+      letter-spacing: 2px;
+      font-family: 'Times New Roman', serif;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn {
+      background: var(--dark-card);
+      color: var(--dark-text);
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    body[data-theme="light"] .btn {
+      background: var(--light-card);
+      color: var(--light-text);
+    }
+
+    .page-title {
+      text-align: center;
+      padding: 1.5rem 0;
+      font-size: 2rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    }
+
+    .whisky-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 0 1rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .whisky-card {
+      background: var(--dark-card);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+
+    body[data-theme="light"] .whisky-card {
+      background: var(--light-card);
+    }
+
+    .whisky-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-img {
+      width: 100%;
+      height: 200px;
+      background-color: #444;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .card-content {
+      padding: 1.2rem;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: var(--gold);
+    }
+
+    .detail-page {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: none;
+    }
+
+    .detail-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .detail-img {
+      width: 100%;
+      height: 350px;
+      background-color: #555;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      margin-bottom: 1.5rem;
+      border-radius: 10px;
+    }
+
+    .detail-content {
+      background: var(--dark-card);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+    }
+
+    body[data-theme="light"] .detail-content {
+      background: var(--light-card);
+    }
+
+    .detail-title {
+      font-size: 2rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+
+    .detail-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .detail-label {
+      font-weight: bold;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .story {
+      font-style: italic;
+      border-left: 3px solid var(--gold);
+      padding-left: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .back-btn {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.7rem 1.5rem;
+      background: var(--gold);
+      color: #1a2a1d;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: var(--accent);
+    }
+
+    .email-link {
+      color: var(--gold);
+      text-decoration: none;
+      display: block;
+      margin-top: 0.5rem;
+      font-weight: bold;
+    }
+
+    @media (max-width: 600px) {
+      .whisky-list {
+        grid-template-columns: 1fr;
+      }
+      
+      .logo {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark" data-lang="en">
+  <header>
+    <div class="logo">日本ウイスキー</div>
+    <div class="controls">
+      <button id="themeToggle" class="btn" title="Toggle theme">
+        <i class="fas fa-moon"></i>
+      </button>
+      <button id="langToggle" class="btn" title="Toggle language">
+        <i class="fas fa-language"></i>
+      </button>
+    </div>
+  </header>
+
+  <main id="mainPage">
+    <h1 class="page-title" data-lang="en">Japanese Whisky Selection</h1>
+    <h1 class="page-title" data-lang="ja" style="display:none">日本のウイスキー選りすぐり</h1>
+    
+    <div class="whisky-list">
+      <!-- Whisky cards will be dynamically inserted here -->
+    </div>
+  </main>
+
+  <section id="detailPage" class="detail-page">
+    <!-- Detail content will be dynamically inserted here -->
+  </section>
+
+  <footer>
+    <div data-lang="en">Contact us</div>
+    <div data-lang="ja" style="display:none">お問い合わせ</div>
+    <a href="mailto:mementomorikatsu@gmail.com" class="email-link">mementomorikatsu@gmail.com</a>
+  </footer>
+
+  <script>
+    // Whisky data with cultural stories
+    const whiskyData = [
+      {
+        id: "yamazaki",
+        name_en: "Yamazaki",
+        name_ja: "山崎",
+        type_en: "Single Malt",
+        type_ja: "シングルモルト",
+        description_en: "Japan's first and foremost single malt whisky with complex fruit and spice notes.",
+        description_ja: "複雑な果実とスパイスの香りが特徴の日本初のシングルモルトウイスキー。",
+        story_en: "Masataka Taketsuru, the father of Japanese whisky, chose Yamazaki for its pure water source and humid climate similar to Scotland. The distillery sits where three rivers converge, creating unique mist conditions perfect for maturation.",
+        story_ja: "日本のウイスキーの父、竹鶴政孝は山崎を選びました。その理由は、スコットランドに似た湿度の高い気候と、三川が合流する地点の霧が熟成に最適だったからです。",
+        image: "yamazaki.jpg",
+        official_url: "https://www.suntory.com/whisky/yamazaki/"
+      },
+      {
+        id: "hakushu",
+        name_en: "Hakushu",
+        name_ja: "白州",
+        type_en: "Single Malt",
+        type_ja: "シングルモルト",
+        description_en: "Forest-inspired whisky with crisp herbal notes and smoky undertones.",
+        description_ja: "森を思わせるハーブの香りとスモーキーな味わいが特徴のウイスキー。",
+        story_en: "Nestled in the forests of the Japanese Alps at 700m elevation, Hakushu uses melted snow water filtered through granite mountains. Distillery workers report seeing Japanese serows (goat-antelopes) wandering near the warehouses.",
+        story_ja: "標高700mの日本アルプスの森に囲まれた白州蒸溜所では、花崗岩を通ってきた雪解け水を使用しています。時には蔵の近くにニホンカモシカが現れることも。",
+        image: "hakushu.jpg",
+        official_url: "https://www.suntory.com/whisky/hakushu/"
+      },
+      // Additional whiskies would follow the same structure
+    ];
+
+    // DOM elements
+    const mainPage = document.getElementById('mainPage');
+    const detailPage = document.getElementById('detailPage');
+    const themeToggle = document.getElementById('themeToggle');
+    const langToggle = document.getElementById('langToggle');
+    const body = document.body;
+
+    // Initialize the app
+    function initApp() {
+      renderWhiskyList();
+      setupEventListeners();
+      setupServiceWorker();
+    }
+
+    // Render whisky list on main page
+    function renderWhiskyList() {
+      const listContainer = document.querySelector('.whisky-list');
+      listContainer.innerHTML = '';
+      
+      const currentLang = body.getAttribute('data-lang');
+      const nameKey = currentLang === 'ja' ? 'name_ja' : 'name_en';
+      
+      whiskyData.forEach(whisky => {
+        const card = document.createElement('div');
+        card.className = 'whisky-card';
+        card.innerHTML = `
+          <div class="card-img" style="background-image: url('images/${whisky.image}')"></div>
+          <div class="card-content">
+            <h3 class="card-title">${whisky[nameKey]}</h3>
+          </div>
+        `;
+        card.addEventListener('click', () => showDetail(whisky.id));
+        listContainer.appendChild(card);
+      });
+    }
+
+    // Show detail page
+    function showDetail(whiskyId) {
+      const whisky = whiskyData.find(w => w.id === whiskyId);
+      if (!whisky) return;
+      
+      const currentLang = body.getAttribute('data-lang');
+      const nameKey = currentLang === 'ja' ? 'name_ja' : 'name_en';
+      const descKey = currentLang === 'ja' ? 'description_ja' : 'description_en';
+      const typeKey = currentLang === 'ja' ? 'type_ja' : 'type_en';
+      const storyKey = currentLang === 'ja' ? 'story_ja' : 'story_en';
+      
+      detailPage.innerHTML = `
+        <div class="detail-header">
+          <h2 class="detail-title">${whisky[nameKey]}</h2>
+        </div>
+        <div class="detail-img" style="background-image: url('images/${whisky.image}')"></div>
+        <div class="detail-content">
+          <div class="detail-section">
+            <span class="detail-label">${currentLang === 'ja' ? '種類' : 'Type'}</span>
+            <div>${whisky[typeKey]}</div>
+          </div>
+          <div class="detail-section">
+            <span class="detail-label">${currentLang === 'ja' ? '説明' : 'Description'}</span>
+            <div>${whisky[descKey]}</div>
+          </div>
+          <div class="detail-section">
+            <span class="detail-label">${currentLang === 'ja' ? '物語' : 'Cultural Story'}</span>
+            <div class="story">${whisky[storyKey]}</div>
+          </div>
+          <a href="${whisky.official_url}" target="_blank" class="detail-label">
+            ${currentLang === 'ja' ? '公式ウェブサイト' : 'Official Website'}
+          </a>
+          <button class="back-btn">${currentLang === 'ja' ? '戻る' : 'Back to List'}</button>
+        </div>
+      `;
+      
+      mainPage.style.display = 'none';
+      detailPage.style.display = 'block';
+      
+      // Add back button event
+      document.querySelector('.back-btn').addEventListener('click', () => {
+        mainPage.style.display = 'block';
+        detailPage.style.display = 'none';
+      });
+    }
+
+    // Setup event listeners
+    function setupEventListeners() {
+      // Theme toggle
+      themeToggle.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        body.setAttribute('data-theme', newTheme);
+        themeToggle.innerHTML = newTheme === 'dark' ? 
+          '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+        
+        // Save preference
+        localStorage.setItem('theme', newTheme);
+      });
+      
+      // Language toggle
+      langToggle.addEventListener('click', () => {
+        const currentLang = body.getAttribute('data-lang');
+        const newLang = currentLang === 'en' ? 'ja' : 'en';
+        body.setAttribute('data-lang', newLang);
+        
+        // Toggle element visibility
+        document.querySelectorAll('[data-lang]').forEach(el => {
+          el.style.display = el.getAttribute('data-lang') === newLang ? 
+            'block' : 'none';
+        });
+        
+        renderWhiskyList();
+        localStorage.setItem('language', newLang);
+      });
+    }
+
+    // Setup service worker
+    function setupServiceWorker() {
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+              console.log('ServiceWorker registered:', registration);
+            })
+            .catch(error => {
+              console.log('ServiceWorker registration failed:', error);
+            });
+        });
+      }
+    }
+
+    // Load preferences
+    function loadPreferences() {
+      // Theme
+      const savedTheme = localStorage.getItem('theme') || 'dark';
+      body.setAttribute('data-theme', savedTheme);
+      themeToggle.innerHTML = savedTheme === 'dark' ? 
+        '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+      
+      // Language
+      const savedLang = localStorage.getItem('language') || 'en';
+      body.setAttribute('data-lang', savedLang);
+      document.querySelectorAll('[data-lang]').forEach(el => {
+        el.style.display = el.getAttribute('data-lang') === savedLang ? 
+          'block' : 'none';
+      });
+    }
+
+    // Initialize when loaded
+    window.addEventListener('DOMContentLoaded', () => {
+      loadPreferences();
+      initApp();
+    });
+  </script>
+</body>
+</html>
