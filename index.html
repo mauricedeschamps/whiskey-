@@ -717,7 +717,7 @@
         const card = document.createElement('div');
         card.className = 'whisky-card';
         card.innerHTML = `
-          <div class="card-img" style="background-image: url('images/${whisky.image}')">
+          <div class="card-img" style="background-image: url('${whisky.image}')">
             <div class="card-type">${whisky[typeKey]}</div>
           </div>
           <div class="card-content">
@@ -752,7 +752,7 @@
         <div class="detail-header">
           <h2 class="detail-title">${whisky[nameKey]}</h2>
         </div>
-        <div class="detail-img" style="background-image: url('images/${whisky.image}')"></div>
+        <div class="detail-img" style="background-image: url('${whisky.image}')"></div>
         <div class="detail-content">
           <div class="detail-section">
             <span class="detail-label"><i class="fas fa-tag"></i>${currentLang === 'ja' ? '種類' : 'Type'}</span>
