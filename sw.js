@@ -5,8 +5,6 @@ const urlsToCache = [
   'index.html',
   'manifest.json',
   // Add image paths here
-  'images/yamazaki.jpg',
-  'images/hakushu.jpg'
   'images/yamazaki.jpg'
 'images/hakushu.jpg'
 'images/hibiki.jpg'
